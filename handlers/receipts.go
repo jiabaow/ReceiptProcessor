@@ -1,12 +1,11 @@
 package handlers
 
 import (
-	"ReceiptProcessor/models"
 	"encoding/json"
 	_ "encoding/json"
 	"github.com/google/uuid"
 	_ "github.com/google/uuid"
-	"github.com/jiabaow/ReceiptProcessor/handlers"
+	"github.com/jiabaow/ReceiptProcessor/models"
 	"net/http"
 	_ "net/http"
 	"regexp"

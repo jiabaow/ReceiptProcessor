@@ -1,4 +1,4 @@
-module ReceiptProcessor
+module github.com/jiabaow/ReceiptProcessor
 
 go 1.17
 
