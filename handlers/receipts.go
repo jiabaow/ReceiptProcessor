@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	_ "github.com/google/uuid"
 	"github.com/jiabaow/ReceiptProcessor/models"
+	"log"
 	"net/http"
 	_ "net/http"
 	"regexp"
@@ -29,6 +30,7 @@ func ProcessReceipt(w http.ResponseWriter, r *http.Request) {
 
 	id := uuid.New().String()
 	receipts[id] = receipt
+	log.Printf("Stored receipt with ID: %s", id)
 
 	response := models.ProcessReceiptResponse{ID: id}
 	w.Header().Set("Content-Type", "application/json")
@@ -100,10 +102,12 @@ func GetPoints(w http.ResponseWriter, r *http.Request) {
 	receipt, exists := receipts[id]
 	if !exists {
 		http.Error(w, "Receipt not found", http.StatusNotFound)
+		log.Printf("Receipt not found for ID: %s", id)
 		return
 	}
 
 	points := calculatePoints(receipt)
+	log.Printf("Calculated %d points for receipt ID: %s", points, id)
 
 	response := models.PointsResponse{Points: points}
 	w.Header().Set("Content-Type", "application/json")
