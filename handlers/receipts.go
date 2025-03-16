@@ -64,14 +64,14 @@ func calculatePoints(r models.Receipt) int {
 	total, _ := strconv.ParseFloat(r.Total, 64)
 	if total == float64(int(total)) {
 		points += 50
-		log.Printf("2. Add 50 points for total: %s", r.Total)
+		log.Printf("2. Add 50 points for total: %s is round", r.Total)
 	}
 
 	// 3. 25 points if the total is a multiple of 0.25
 	if total*100 == float64(int(total*100)) {
 		if int(total*100)%25 == 0 {
 			points += 25
-			log.Printf("3. Add 25 points for total: %s", r.Total)
+			log.Printf("3. Add 25 points for total: %s is multiple of 0.25", r.Total)
 		}
 	}
 
@@ -99,18 +99,22 @@ func calculatePoints(r models.Receipt) int {
 	//}
 
 	// 7. 6 points if the day in the purchase date is odd
-	date, _ := time.Parse("2006-01-02", r.PurchaseDate)
-	if date.Day()%2 == 1 {
-		points += 6
-		log.Printf("7. Add 6 points for odd day in purchase date")
+	date, err := time.Parse("2006-01-02", r.PurchaseDate)
+	log.Printf("Purchase date: %s", date)
+	if err != nil {
+		log.Printf("Error parsing purchase date: %v", err)
+	} else {
+		if date.Day()%2 == 1 {
+			points += 6
+			log.Printf("7. Add 6 points for odd day in purchase date: %d", date.Day())
+		}
 	}
 
 	//8. 10 points if the time of purchase is after 2pm and before 4pm
 	t, _ := time.Parse("15:04", r.PurchaseTime)
 	if t.Hour() >= 14 && t.Hour() <= 16 {
-		log.Printf("Time of purchase: %d", t.Hour())
 		points += 10
-		log.Printf("8. Add 10 points for time of purchase")
+		log.Printf("8. Add 10 points for time of purchase: %d", t.Hour())
 	}
 
 	return points
