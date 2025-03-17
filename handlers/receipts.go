@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jiabaow/ReceiptProcessor/models"
 	"log"
+	"math"
 	"net/http"
 	_ "net/http"
 	"regexp"
@@ -85,7 +86,7 @@ func calculatePoints(r models.Receipt) int {
 	for _, item := range r.Items {
 		if len(strings.TrimSpace(item.ShortDescription))%3 == 0 {
 			price, _ := strconv.ParseFloat(item.Price, 64)
-			calculatedPrice := int((price * 0.2) + 0.999)
+			calculatedPrice := int(math.Ceil(price * 0.2))
 			points += calculatedPrice
 			log.Printf("5. Add %d points for item description", calculatedPrice)
 		}

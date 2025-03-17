@@ -54,4 +54,5 @@ curl -X POST http://localhost:8080/receipts/process \
          }'
 
 Replace the {id} with the ID from the previous response.
+
 curl http://localhost:8080/receipts/{id}/points

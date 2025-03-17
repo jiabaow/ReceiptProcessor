@@ -10,7 +10,7 @@ After clone the repo go to /ReceiptProcessor.
 ```docker build -t receipt-processor .```
 
 ### Run the Docker Contaner
-```docker run -p 80880:8080 receipt-processor```
+```docker run -p 8080:8080 receipt-processor```
 The server will start on port 8080.
 
 ## Testing the Application
